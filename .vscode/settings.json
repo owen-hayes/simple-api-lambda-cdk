@@ -1,0 +1,4 @@
+{
+    "mypy-type-checker.importStrategy": "fromEnvironment",
+    "mypy-type-checker.interpreter": ["./.venv/bin/python"]
+}

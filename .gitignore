@@ -1,0 +1,10 @@
+__pycache__
+.mypy_cache
+
+dependencies
+
+.venv
+
+cdk.out
+
+.DS_Store
