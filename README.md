@@ -12,6 +12,7 @@ You can easily run the API locally (`uv run dev`), which allows for a nice devel
 simple-api-lambda-cdk/
 ├── app/                    # FastAPI application
 │   ├── handler.py          # Lambda handler and dev server
+│   ├── requirements.txt    # Application runtime dependencies
 │   ├── models/             # Pydantic models
 │   ├── routes/             # API route definitions
 │   │   ├── greetings/      # Greeting endpoints
@@ -41,6 +42,8 @@ simple-api-lambda-cdk/
    ```bash
    uv sync
    ```
+
+   The Lambda application's runtime dependencies are defined in `app/requirements.txt`. The CDK bundling step installs from this file so the application folder can be managed independently (for example, as a Git submodule).
 
 2. **Bootstrap CDK (if not already done):**
 
