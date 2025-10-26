@@ -12,8 +12,11 @@ app = cdk.App()
 # Create the stack
 SimpleLambdaStack(
     app,
-    "SimpleLambdaStack",
-    description="Simple Lambda function with API Gateway",
+    'SimpleLambdaStack01',
+    lambda_id='SimpleLambdaFunction01',
+    lambda_description='lambda_description01',
+    api_id='SimpleLambdaApi01',
+    api_description='api_description01',
     env=cdk.Environment(
         account=app.node.try_get_context("account"),
         region=app.node.try_get_context("region"),
