@@ -19,17 +19,33 @@ from constructs import Construct
 class SimpleLambdaStack(Stack):
     """CDK Stack for Simple Lambda with API Gateway."""
 
-    def __init__(self, scope: Construct, construct_id: str, **kwargs: Any) -> None:
+    def __init__(
+        self,
+        scope: Construct,
+        construct_id: str,
+        *,
+        lambda_id: str = "SimpleLambdaFunction",
+        lambda_description: str | None = None,
+        api_id: str = "SimpleLambdaApi",
+        api_description: str | None = None,
+        **kwargs: Any,
+    ) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         # Generate version based on deployment time
         deployment_time = datetime.datetime.now(datetime.timezone.utc)
         version = deployment_time.strftime("%Y.%m.%d.%H%M")
+        lambda_description_value = (
+            lambda_description
+            if lambda_description is not None
+            else f"Simple Hello World Lambda function with external dependencies (v{version})"
+        )
+        api_description_value = api_description or "API Gateway for Simple Lambda"
 
         # Create Lambda function with bundled dependencies
         lambda_function = _lambda.Function(
             self,
-            "SimpleLambdaFunction",
+            lambda_id,
             runtime=_lambda.Runtime.PYTHON_3_13,
             handler="app.handler.handler",
             code=_lambda.Code.from_asset(
@@ -54,18 +70,18 @@ class SimpleLambdaStack(Stack):
             },
             log_group=logs.LogGroup(
                 self,
-                "SimpleLambdaLogGroup",
-                log_group_name="/aws/lambda/SimpleLambdaFunction",
+                f"{lambda_id}LogGroup",
+                log_group_name=f"/aws/lambda/{lambda_id}",
                 retention=logs.RetentionDays.ONE_WEEK,
             ),
-            description=f"Simple Hello World Lambda function with external dependencies (v{version})",
+            description=lambda_description_value,
         )
 
         # Create HTTP API Gateway
         http_api = apigatewayv2.HttpApi(
             self,
-            "SimpleLambdaApi",
-            description="API Gateway for Simple Lambda",
+            api_id,
+            description=api_description_value,
             cors_preflight=apigatewayv2.CorsPreflightOptions(
                 allow_origins=["*"],
                 allow_methods=[
