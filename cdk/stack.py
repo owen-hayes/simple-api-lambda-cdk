@@ -42,7 +42,7 @@ class SimpleLambdaStack(Stack):
                         "-c",
                         # Exit the script if any command fails (set -e)
                         "set -e; \
-                        pip install --no-cache-dir --target /asset-output --platform linux_x86_64 --only-binary=:all: . --group lambda; \
+                        pip install --no-cache-dir --target /asset-output --platform linux_x86_64 --only-binary=:all: -r app/requirements.txt; \
                         cp -r app /asset-output",
                     ],
                 ),

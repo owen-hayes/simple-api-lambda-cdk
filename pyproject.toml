@@ -17,16 +17,6 @@ start = "app.handler:start"
 default-groups = "all"
 
 [dependency-groups]
-# Lambda runtime dependencies
-lambda = [
-    "requests>=2.31.0",
-    "fastapi>=0.115.0",
-    "mangum>=0.17.0",
-    "uvicorn>=0.37.0",
-    "scalar-fastapi>=1.4.3",
-    "types-requests>=2.32.4.20250913",
-    "pydantic[email]",
-]
 
 # Development dependencies
 dev = [
